@@ -1,8 +1,9 @@
 -module(day_1).
-%% Solves the Day 1: Historian Hysteria problem: https://adventofcode.com/2024/day/1
+%% Solves the Day 1: Historian Hysteria problem: https://adventofcode.com/2024/day/1#part2
 %% Summary:
 %%  - Part 1: Finds the total distance between the numbers in the list after 
 %%    sorting both lists and pairing them up.
+%%  - Part 2: Finds the total similatiry between the lists
 -export([
     part_1/0,
     part_2/0,
