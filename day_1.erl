@@ -5,15 +5,22 @@
 %%    sorting both lists and pairing them up.
 -export([
     part_1/0,
+    part_2/0,
     read_input/1,
-    total_distance/2
+    total_distance/2,
+    total_similarity/2
 ]).
 
-%% Completes the problem in one call
+%% Completes part 1 in one call
 -spec part_1() -> integer().
 part_1() ->
     {List1, List2} = read_input("input/day_1.txt"),
     total_distance(List1, List2).
+
+%% Completes part 2 in one call
+part_2() ->
+    {List1, List2} = read_input("input/day_1.txt"),
+    total_similarity(List1, List2).
 
 %% Reads the input file into two lists
 -spec read_input(string()) -> {list(), list()}.
@@ -32,6 +39,14 @@ total_distance(List1, List2) ->
     lists:foldl(fun({L, R}, Total) ->
         Total + abs(L-R)
     end, 0, Paired).
+
+%% Takes two lists and finds the total similarity (value of element in list 1
+%% multiplied by number of occurence of that element in list2)
+total_similarity(List1, List2) ->
+    lists:foldl(fun(Num, Total) ->
+        Occurences = length(lists:filter(fun(Element) -> Element == Num end, List2)),
+        Total + (Num * Occurences)
+    end, 0, List1).
 
 %% Helper function to split the triple space seperated lines of the file
 split_list([], List1, List2) ->
