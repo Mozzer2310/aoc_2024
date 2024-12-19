@@ -21,14 +21,15 @@ read_input(FileName) ->
 
 %% Determines the total number of 'safe' reports from a list of 'Reports'
 total_safe_reports(Reports) ->
-  lists:foldl(fun(Report, Count) ->
-                 case is_safe_report(Report) of
-                   true -> Count + 1;
-                   false -> Count
-                 end
-              end,
-              0,
-              Reports).
+  lists:foldl(
+    fun(Report, Count) ->
+      case is_safe_report(Report) of
+        true -> 
+          Count + 1;
+         false -> 
+          Count
+      end
+    end, 0, Reports).
 
 %% Checks if a single report is 'safe', true for all conditions
 is_safe_report(Report) ->
@@ -42,7 +43,7 @@ is_increase_or_decrease(Report) ->
 %% Checks that the difference between adjacement elements is a 'safe' distance
 is_safe_difference([]) ->
   true;
-is_safe_difference([_H | []]) ->
+is_safe_difference([_H]) ->
   true;
 is_safe_difference([E1, E2 | Rest]) ->
   Diff = abs(E1 - E2),
@@ -68,7 +69,5 @@ format_lines([], Reports) ->
   Reports;
 format_lines([H | Rest], Reports) ->
   BinReport = binary:split(H, <<" ">>, [global]),
-  Report =
-    lists:reverse(
-      lists:foldl(fun(E, R) -> [binary_to_integer(E) | R] end, [], BinReport)),
+  Report = lists:reverse(lists:foldl(fun(E, R) -> [binary_to_integer(E) | R] end, [], BinReport)),
   format_lines(Rest, [Report | Reports]).
