@@ -1,16 +1,16 @@
 -module(day_1).
+
 %% Solves the Day 1: Historian Hysteria problem: https://adventofcode.com/2024/day/1#part2
 %% Summary:
-%%  - Part 1: Finds the total distance between the numbers in the list after 
+%%  - Part 1: Finds the total distance between the numbers in the list after
 %%    sorting both lists and pairing them up.
 %%  - Part 2: Finds the total similatiry between the lists
 -export([
-    part_1/0,
-    part_2/0,
-    read_input/1,
-    total_distance/2,
-    total_similarity/2
-]).
+  part_1/0, 
+  part_2/0, 
+  read_input/1, 
+  total_distance/2, 
+  total_similarity/2]).
 
 %% Completes part 1 in one call
 -spec part_1() -> integer().
@@ -37,17 +37,16 @@ total_distance(List1, List2) ->
     Sorted2 = lists:sort(List2),
     Paired = lists:zip(Sorted1, Sorted2),
 
-    lists:foldl(fun({L, R}, Total) ->
-        Total + abs(L-R)
-    end, 0, Paired).
+    lists:foldl(fun({L, R}, Total) -> Total + abs(L - R) end, 0, Paired).
 
 %% Takes two lists and finds the total similarity (value of element in list 1
 %% multiplied by number of occurence of that element in list2)
 total_similarity(List1, List2) ->
-    lists:foldl(fun(Num, Total) ->
+    lists:foldl(
+      fun(Num, Total) ->
         Occurences = length(lists:filter(fun(Element) -> Element == Num end, List2)),
-        Total + (Num * Occurences)
-    end, 0, List1).
+        Total + Num * Occurences
+      end, 0, List1).
 
 %% Helper function to split the triple space seperated lines of the file
 split_list([], List1, List2) ->
